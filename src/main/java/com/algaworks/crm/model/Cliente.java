@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Data
+@Data //Gerando Getters, Setters, hashcode, equals, toString, etc... - códigos boilerplates
 @Entity //JPA - Entidade (tabela Cliente no banco de dados)
 public class Cliente {
 
@@ -33,21 +33,4 @@ public class Cliente {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-
-    //Se caso você ir atrás daquela chave estrategica que o banco gera, terá o mesmo hashCode
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cliente cliente = (Cliente) o;
-        return id == cliente.id;
-    }
-
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }
-//De forma resumida, o hashcode seria um espaço na memoria, personalizamos ele para ser uma pk gerada no banco de dados
