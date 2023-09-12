@@ -22,7 +22,7 @@ public class ClienteController {
 
     @PostMapping //Quando chega uma requisição post a raiz do projeto, cai nesse método
     @ResponseStatus(HttpStatus.CREATED) //201 - Created | Se não vai vir um status 200 ...
-    public Cliente adicionar(@RequestBody Cliente cliente) { //Essa anotação faz com que o corpo da requisição que é um objeto JSON seja converido para um objeto JAVA Cliente cliente
+    public Cliente adicionar(@RequestBody Cliente cliente) { //Essa anotação faz com que o corpo da requisição que é um objeto JSON seja convertido para um objeto JAVA Cliente cliente
         return clienteRepository.save(cliente);
     }
 }
