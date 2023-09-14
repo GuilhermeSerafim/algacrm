@@ -11,26 +11,8 @@ public class Cliente {
 
     @Id //Propriedade que identifica nossa identidade //Chave primária
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Estrategia para a geração de uma nova id
-
-    @Column //É só uma anotação de que é uma coluna
     private long id;
 
     @Column //posso usar > (nullable = false) - not null no banco de dados
     private String nome;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 }
