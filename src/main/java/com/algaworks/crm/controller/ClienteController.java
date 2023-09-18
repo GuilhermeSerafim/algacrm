@@ -30,7 +30,6 @@ public class ClienteController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-
     //Created
     @PostMapping() //Quando chega uma requisição post a raiz do projeto, cai nesse método
     @ResponseStatus(HttpStatus.CREATED) //201 - Created | Se não vai vir um status 200 ...
