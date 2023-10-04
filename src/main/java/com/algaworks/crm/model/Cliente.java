@@ -5,14 +5,48 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Data //Gerando Getters, Setters, hashcode, equals, toString, etc... - códigos boilerplates
-@Entity //JPA - Entidade (tabela Cliente no banco de dados)
+@Data
+@Entity
 public class Cliente {
 
-    @Id //Propriedade que identifica nossa identidade //Chave primária
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //Estrategia para a geração de uma nova id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column //posso usar > (nullable = false) - not null no banco de dados
+    // Tela 2: Dados Pessoais
+    @Column(nullable = false) // Exemplo: tornando o nome obrigatório
     private String nome;
+
+    @Column(nullable = false)
+    private String sobrenome;
+
+    @Column(nullable = false, unique = true) // Exemplo: tornando o CPF obrigatório e único
+    private String cpf;
+
+    // Tela 3: Dados de Endereço
+    @Column(nullable = false)
+    private String cep;
+
+    @Column(nullable = false)
+    private String endereco;
+
+    @Column(nullable = false)
+    private String numero;
+
+    @Column(nullable = false)
+    private String estado;
+
+    @Column(nullable = false)
+    private String cidade;
+
+    // Tela 1: Dados de Login
+    @Column(nullable = false, unique = true) // Exemplo: tornando o email obrigatório e único
+    private String email;
+
+    @Column(nullable = false)
+    private String senha;
+
+    // Você pode adicionar mais campos conforme necessário para cada tela
+
+    // Métodos getter, setter, equals, hashCode, toString gerados automaticamente
 }
