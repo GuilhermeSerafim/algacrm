@@ -8,10 +8,17 @@ import java.util.Objects;
 @Data
 @Entity
 public class Cliente {
-
+//TODOS OS DADOS SERÃO ENVIADOS DO CONSUMO DA API (VIEW)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    // Tela 1: Dados de Login
+    @Column(nullable = false, unique = true) // Exemplo: tornando o email obrigatório e único
+    private String email;
+
+    @Column(nullable = false)
+    private String senha;
 
     // Tela 2: Dados Pessoais
     @Column(nullable = false) // Exemplo: tornando o nome obrigatório
@@ -38,15 +45,6 @@ public class Cliente {
 
     @Column(nullable = false)
     private String cidade;
-
-    // Tela 1: Dados de Login
-    @Column(nullable = false, unique = true) // Exemplo: tornando o email obrigatório e único
-    private String email;
-
-    @Column(nullable = false)
-    private String senha;
-
-    // Você pode adicionar mais campos conforme necessário para cada tela
 
     // Métodos getter, setter, equals, hashCode, toString gerados automaticamente
 }
