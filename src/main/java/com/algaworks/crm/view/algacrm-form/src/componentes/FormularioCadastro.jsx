@@ -2,8 +2,8 @@ import { Button, FormControlLabel, Switch, TextField } from "@mui/material";
 import React, { useState } from "react";
 
 //O retorno de uma function componente tem que ser minha arvore de renderização
-function FormularioCadastro() {
-	const [nome, setNome] = useState("Ricardo");
+function FormularioCadastro({aoEnviar}) {
+	const [nome, setNome] = useState("");
 	const [sobrenome, setSobrenome] = useState("");
 	const [cpf, setCpf] = useState("");
 	const [promocoes, setPromocoes] = useState(true);
@@ -13,7 +13,7 @@ function FormularioCadastro() {
 		<form
 			onSubmit={(event) => {
 				event.preventDefault();
-				console.log({nome, sobrenome, cpf, promocoes, novidades});
+				aoEnviar({nome, sobrenome, cpf, promocoes, novidades});
 			}}
 		>
 			<TextField
