@@ -6,8 +6,8 @@ import { Container, Typography } from "@material-ui/core"
 import ValidacoesCadastro from "./contexts/ValidacoesCadastro";
 import { validarCPF, validarSenha } from './models/cadastro'
 
-
 class App extends Component {
+
   render() {
     return (
       <Container component="article" maxWidth="sm">
@@ -21,8 +21,25 @@ class App extends Component {
 }
 
 //Aqui acontecera o envio de dados para a API
-function aoEnviarForm(dados) {
-  console.log(dados);
+async function aoEnviarForm(dados) {
+  try {
+    const response = await fetch('http://localhost:8085/guilherme/clientes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dados),
+    });
+
+    if (response.ok) {
+      console.log('Dados enviados com sucesso para a API.');
+    } else {
+      console.error('Erro ao enviar dados para a API.');
+    }
+  } catch (error) {
+    console.error('Erro ao enviar dados para a API:', error);
+    // Erros de rede ou exceções aqui.
+  }
 }
 
 export default App;
