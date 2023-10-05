@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <Container component='article' maxWidth='sm'>
         <Typography variant='h3' align='center' component='h1'>FormularioCadastro</Typography>
-          <FormularioCadastro />
+          <FormularioCadastro/>
       </Container>
     );
   }
