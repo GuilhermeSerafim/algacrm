@@ -15,7 +15,7 @@ import java.util.Optional;
 @RequestMapping("/clientes")
 public class ClienteController {
 
-    @Autowired //Injetar dependencia
+    @Autowired //Injetar dependencia | Aproveitar o primeiro new, e não criar novos na memoria
     private ClienteRepository clienteRepository;
 
     //Read
@@ -24,27 +24,44 @@ public class ClienteController {
         return clienteRepository.findAll();
     }
 
+    //Antes
+//    @GetMapping("/v1/{nome}")
+//    public ResponseEntity<Cliente> buscarClientePorNome(@PathVariable("nome") String nome) {
+//        Cliente byNome = clienteRepository.findByNome(nome);
+//        return clienteRepository.findByNome(nome).map(registro -> ResponseEntity.ok().body(registro))
+//                .orElse(ResponseEntity.notFound().build());
+//    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> buscarClientePorId(@PathVariable("id") Long identificador) {
-        return clienteRepository.findById(identificador).map(registro -> ResponseEntity.ok().body(registro))
-                .orElse(ResponseEntity.notFound().build());
+        Optional<Cliente> optCliente = clienteRepository.findById(identificador);
+        Cliente cliente;
+        cliente = optCliente.get();
+        ResponseEntity<Cliente> body = ResponseEntity.ok().body(cliente);
+        return body;
     }
 
-    //Created
-    @PostMapping() //Quando chega uma requisição post a raiz do projeto, cai nesse método
-    @ResponseStatus(HttpStatus.CREATED) //201 - Created | Se não vai vir um status 200 ...
-    public Cliente adicionarCliente(@RequestBody Cliente cliente) { //Essa anotação faz com que o corpo da requisição que é um objeto JSON seja convertido para um objeto JAVA Cliente cliente
-        return clienteRepository.save(cliente);
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Cliente> adicionarCliente(@RequestBody Cliente cliente) {
+        Cliente novoCliente = clienteRepository.save(cliente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
     }
 
-    //Delete
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarCliente(@PathVariable Long id) {
-        if(clienteRepository.existsById(id)) {
+
+        Optional<Cliente> optCliente = clienteRepository.findById(id);
+        boolean clienteExiste;
+        clienteExiste = optCliente.isPresent();
+        if (clienteExiste) {
             clienteRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
         }
-        return null;
     }
+
 }
