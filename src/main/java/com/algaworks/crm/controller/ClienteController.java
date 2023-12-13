@@ -4,13 +4,13 @@ import com.algaworks.crm.model.Cliente;
 import com.algaworks.crm.repository.ClienteRepository;
 import com.algaworks.crm.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -29,19 +29,24 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> buscarClientePorId(@PathVariable("id") Long identificador) {
+    public ResponseEntity<Optional<Cliente>> buscarClientePorId(@PathVariable("id") Long identificador) {
         Optional<Cliente> optCliente = clienteRepository.findById(identificador);
-        Cliente cliente;
-        cliente = optCliente.get();
-        ResponseEntity<Cliente> body = ResponseEntity.ok().body(cliente);
-        return body;
+        if(optCliente.isPresent()) {
+            return ResponseEntity.ok().body(optCliente);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     //Criando meu próprio metodo de buscar pelo nome, em vez de usar o do jpa repository - task Tokio Marine Francis
     @GetMapping("/nome/{nome}")
     public ResponseEntity<Cliente> buscarClientePorNome(@PathVariable String nome) {
-        Cliente cliente = clienteService.buscarPorNome(nome);
-        return ResponseEntity.ok().body(cliente);
+        Cliente optCLiente = clienteService.buscarPorNome(nome);
+        if(optCLiente != null) {
+            return ResponseEntity.ok().body(optCLiente);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 
